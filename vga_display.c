@@ -30,6 +30,13 @@ void draw_title_page () {
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = TITLEPAGE[i][j];
 }
 
+void draw_word (int rand_index) {
+    int i = 0;
+    int j = 0;
+    for (i = 10; i < 100; ++i)
+        for (j = 80; j < 240; ++j)
+            *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = TITLEPAGE[i][j];
+}
 void draw_blue_choice () {
     int i = 0;
     int j = 0;
