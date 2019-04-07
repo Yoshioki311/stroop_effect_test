@@ -20,6 +20,12 @@ void config_KEYs(void);
 void enable_A9_interrupts(void);
 // VGA related functions
 void draw_title_page (void);
+void clear_screen(void);
+void draw_word (int rand_index);
+// Utility functions
+int decoder (int key_pressed);
+void shuffle(int *array);
+void display_score(int score);
 /*----------------------------------------------------*/
 
 int main(void) {
@@ -44,19 +50,61 @@ int main(void) {
     volatile int * pixel_ctrl_ptr = (int *)PIXEL_BUF_CTRL_BASE;
     volatile int * key_ptr = (int *)KEY_BASE;
     pixel_buffer_start = *pixel_ctrl_ptr;
-    draw_title_page ();
-    
 
-    // while(1) {
-    //     if (state == 0) { // Game paused
-    //         int pressed = *(key_ptr + 3); // Read the edge capture register
-    //         while (pressed == 0)
-    //             pressed = *(key_ptr + 3);
-    //         *(key_ptr + 3) = pressed; // Reset the edge capture register
-    //         state = 1; // Set the state to be 1 (on)
-    //     }
-    //     else if (state == 1) { // Game on
-    //         int random_index = rand() % 12;
-    //     }
-    // }
+    int score = 0;
+    int choice[4] = {0, 1, 2, 3};
+    draw_title_page ();
+
+    while(1) {
+        if (state == 0) {                   // Game paused
+            score = 0;                      // Reset the score
+            int pressed = *(key_ptr + 3);   // Read the edge capture register
+            while (pressed == 0)
+                pressed = *(key_ptr + 3);
+            *(key_ptr + 3) = pressed;       // Reset the edge capture register
+            clear_screen();                 // Clear the screen
+            state = 1;                      // Set the state to be 1 (on)
+        }
+        else if (state == 1) {              // Game on
+            int rand_index = rand() % 12;
+            draw_word(rand_index);
+            shuffle(choice);                // Shuffle the array for choices
+            draw_choice(choice);
+
+            int pressed = *(key_ptr + 3);   // Read the edge capture register
+            while (pressed == 0)
+                pressed = *(key_ptr + 3);
+            *(key_ptr + 3) = pressed;       // Reset the edge capture register
+            int index = 0;
+            
+            index = decoder(pressed);
+            if (choice[index] == rand_index % 4)
+                score++;
+            display_score(score);
+        }
+    }
+}
+
+int decoder (int key_pressed) {
+    int index = 0;
+    switch (key_pressed) {
+        case 1: index = 3;
+                break;
+        case 2: index = 2;
+                break;
+        case 4: index = 1;
+                break;
+        case 8: index = 0;
+                break;
+    }
+}
+
+void shuffle(int * choice) {
+    int i = 0;
+    for (i = 0; i < 3; ++i) {
+        size_t j = i + rand() / (RAND_MAX / (4 - i) + 1);
+        int t = choice[j];
+        choice[j] = choice[i];
+        choice[i] = t;
+    }
 }
