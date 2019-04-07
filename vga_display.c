@@ -31,11 +31,32 @@ void draw_title_page () {
 }
 
 void draw_word (int rand_index) {
-    int i = 0;
-    int j = 0;
-    for (i = 10; i < 100; ++i)
-        for (j = 80; j < 240; ++j)
-            *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = TITLEPAGE[i][j];
+    switch (rand_index) {
+        case 0: draw_blue_in_green ();
+                break;
+        case 1: draw_blue_in_red ();
+                break;
+        case 2: draw_blue_in_yellow ();
+                break;
+        case 3: draw_green_in_blue ();
+                break;
+        case 4: draw_green_in_red ();
+                break;
+        case 5: draw_green_in_yellow ();
+                break;
+        case 6: draw_red_in_blue ();
+                break;
+        case 7: draw_red_in_green ();
+                break;
+        case 8: draw_red_in_yellow ();
+                break;
+        case 9: draw_yellow_in_blue ();
+                break;
+        case 10: draw_yellow_in_green ();
+                 break;
+        case 11: draw_yellow_in_red ();
+                 break;
+    }
 }
 
 /*----------------------------- Choices --------------------------------*/
