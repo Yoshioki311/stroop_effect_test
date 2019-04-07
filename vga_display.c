@@ -76,96 +76,96 @@ void draw_yellow_choice () {
 void draw_blue_in_green () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = BLUE_IN_GREEN[i][j];
 }
 
 void draw_blue_in_red () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = BLUE_IN_RED[i][j];
 }
 
 void draw_blue_in_yellow () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = BLUE_IN_YELLOW[i][j];
 }
 
 void draw_green_in_blue () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = GREEN_IN_BLUE[i][j];
 }
 
 void draw_green_in_red () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = GREEN_IN_RED[i][j];
 }
 
 void draw_green_in_yellow () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = GREEN_IN_YELLOW[i][j];
 }
 
 void draw_red_in_blue () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+   for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = RED_IN_BLUE[i][j];
 }
 
 void draw_red_in_green () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = RED_IN_GREEN[i][j];
 }
 
 void draw_red_in_yellow () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = RED_IN_YELLOW[i][j];
 }
 
 void draw_yellow_in_blue () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_IN_BLUE[i][j];
 }
 
 void draw_yellow_in_green () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+    for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_IN_GREEN[i][j];
 }
 
 void draw_yellow_in_red () {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 90; i++)
-        for (j = 0; j < 160; j++)
+   for (i = 10; i < 100; i++)
+        for (j = 80; j < 240; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_IN_RED[i][j];
 }
 /*----------------------------------------------------------------------*/
