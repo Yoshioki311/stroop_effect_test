@@ -22,6 +22,14 @@ extern short YELLOW_IN_BLUE [90][160];
 extern short YELLOW_IN_GREEN [90][160];
 extern short YELLOW_IN_RED [90][160];
 
+void clear_screen() {
+    for(int x = 0; x < 320; ++x) {
+        for(int y = 0; y < 240; ++y) {
+            *(short int *)(pixel_buffer_start + (y << 10) + (x << 1)) = 0;
+        }
+    }
+}
+
 void draw_title_page () {
     int i = 0;
     int j = 0;
@@ -59,36 +67,79 @@ void draw_word (int rand_index) {
     }
 }
 
+void draw_choice (int * choice) {
+    switch(choice[0]) {
+        case 0: draw_blue_choice(34);
+                break;
+        case 1: draw_green_choice(34);
+                break;
+        case 2: draw_red_choice(34);
+                break;
+        case 3: draw_yellow_choice(34);
+                break;
+    }
+    switch(choice[1]) {
+        case 0: draw_blue_choice(108);
+                break;
+        case 1: draw_green_choice(108);
+                break;
+        case 2: draw_red_choice(108);
+                break;
+        case 3: draw_yellow_choice(108);
+                break;
+    }
+    switch(choice[2]) {
+        case 0: draw_blue_choice(172);
+                break;
+        case 1: draw_green_choice(172);
+                break;
+        case 2: draw_red_choice(172);
+                break;
+        case 3: draw_yellow_choice(172);
+                break;
+    }
+    switch(choice[3]) {
+        case 0: draw_blue_choice(236);
+                break;
+        case 1: draw_green_choice(236);
+                break;
+        case 2: draw_red_choice(236);
+                break;
+        case 3: draw_yellow_choice(236);
+                break;
+    }
+}
+
 /*----------------------------- Choices --------------------------------*/
-void draw_blue_choice () {
+void draw_blue_choice (int x) {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 40; i++)
-        for (j = 0; j < 60; j++)
+    for (i = 110; i < 150; i++)
+        for (j = x; j < x + 60; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = BLUE_CHOICE[i][j];
 }
 
-void draw_green_choice () {
+void draw_green_choice (int x) {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 40; i++)
-        for (j = 0; j < 60; j++)
+    for (i = 110; i < 150; i++)
+        for (j = x; j < x + 60; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = GREEN_CHOICE[i][j];
 }
 
-void draw_red_choice () {
+void draw_red_choice (int x) {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 40; i++)
-        for (j = 0; j < 60; j++)
+    for (i = 110; i < 150; i++)
+        for (j = x; j < x + 60; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = RED_CHOICE[i][j];
 }
 
-void draw_yellow_choice () {
+void draw_yellow_choice (int x) {
     int i = 0;
     int j = 0;
-    for (i = 0; i < 40; i++)
-        for (j = 0; j < 60; j++)
+    for (i = 110; i < 150; i++)
+        for (j = x; j < x + 60; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_CHOICE[i][j];
 }
 /*----------------------------------------------------------------------*/
