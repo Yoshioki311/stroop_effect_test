@@ -37,6 +37,8 @@ void draw_word (int rand_index) {
         for (j = 80; j < 240; ++j)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = TITLEPAGE[i][j];
 }
+
+/*----------------------------- Choices --------------------------------*/
 void draw_blue_choice () {
     int i = 0;
     int j = 0;
@@ -68,7 +70,9 @@ void draw_yellow_choice () {
         for (j = 0; j < 60; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_CHOICE[i][j];
 }
+/*----------------------------------------------------------------------*/
 
+/*---------------------------- Display word ----------------------------*/
 void draw_blue_in_green () {
     int i = 0;
     int j = 0;
@@ -164,3 +168,4 @@ void draw_yellow_in_red () {
         for (j = 0; j < 160; j++)
             *(short int *)(pixel_buffer_start + (i << 10) + (j << 1)) = YELLOW_IN_RED[i][j];
 }
+/*----------------------------------------------------------------------*/
