@@ -1,8 +1,8 @@
                 .global display_score
 
-display_score:  
+display_score:
                 PUSH {LR}
-                B    DIVIDE
+                BL   DIVIDE
 
                 LDR  R2, =PATTERN
                 LDRB R2, [R2, +R0]
@@ -13,7 +13,7 @@ display_score:
                 LSL  R2, #8
                 ORR  R3, R2
 
-                LDR  R1, =#0xFF200030
+                LDR  R1, =0xFF200030
                 STR  R3, [R1]
 
                 POP  {PC}
