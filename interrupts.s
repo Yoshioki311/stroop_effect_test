@@ -18,7 +18,7 @@ config_interval_timer:
                 STR      R1, [R0, #12]
 
                 LDR      R1, [R0, #4]    // fetch from control register
-                ORR      R1, #0b0011     // enable interrupt and auto reload
+                ORR      R1, #0b0001     // enable interrupt
                 STR      R1, [R0, #4]
 
                 BX       LR
