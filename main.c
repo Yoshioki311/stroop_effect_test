@@ -23,6 +23,7 @@ void enable_A9_interrupts(void);
 void draw_title_page (void);
 void clear_screen(void);
 void draw_word (int rand_index);
+void draw_choice(int * choice);
 void draw_text(int x, int y, char *text_ptr);
 void clean_text(void);
 // Utility functions
@@ -127,6 +128,7 @@ int decoder (int key_pressed) {
         case 8: index = 0;
                 break;
     }
+    return index;
 }
 
 void shuffle(int * choice) {
