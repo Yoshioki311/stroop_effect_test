@@ -3,13 +3,11 @@
 #include "address_map_arm.h"
 
 /*------------------Global variables------------------*/
-// // Variables to be written by interrupt service routines
-// volatile int key_dir = 0;
 // Variables for VGA display
 volatile int pixel_buffer_start;
 volatile char * char_buffer_ptr = (char *)FPGA_CHAR_BASE;
-// Variable for reccording game state, changed by ISR
-volatile int state = 0;
+// Variable for recording time left for one try of the game
+volatile int time_left = 3000;
 /*----------------------------------------------------*/
 
 /*----------------Function declaration----------------*/
@@ -17,7 +15,6 @@ volatile int state = 0;
 void set_A9_IRQ_stack(void);
 void config_GIC(void);
 void config_interval_timer(void);
-void config_KEYs(void);
 void enable_A9_interrupts(void);
 // VGA related functions
 void draw_title_page (void);
@@ -45,17 +42,17 @@ int main(void) {
     config_GIC();
     // configure Altera interval timer to generate interrupts
     config_interval_timer();
-    // configure pushbutton KEYs to generate interrupts
-    // config_KEYs();
     // enable interrupts
     enable_A9_interrupts();
     /*----------------------------------------------------*/
 
     volatile int * pixel_ctrl_ptr = (int *)PIXEL_BUF_CTRL_BASE;
     volatile int * interval_timer_ptr = (int *)TIMER_BASE;
+    volatile int * lower_hex_ptr = (int *)HEX3_HEX0_BASE;
     volatile int * key_ptr = (int *)KEY_BASE;
     pixel_buffer_start = *pixel_ctrl_ptr;
 
+    int state = 0;
     int game_start = 0;
     int score = 0;
     int choice[4] = {0, 1, 2, 3};
@@ -78,12 +75,14 @@ int main(void) {
                                    'Y', ' ', 't', 'o', ' ', 'r', 'e', 's', 't', 'a', 'r', 't', '\0'};
                 draw_text(27, 30, sentence);
             }
-
+            
             int pressed = *(key_ptr + 3);   // Read the edge capture register
             while (pressed == 0)            // Wait until key being pressed
                 pressed = *(key_ptr + 3);
             *(key_ptr + 3) = pressed;       // Reset the edge capture register
-            *(interval_timer_ptr + 1) = 5;  // Start the timer
+            time_left = 3000;               // Reset stopwatch
+            *lower_hex_ptr = 0x4F3F3F3F;    // HEX3-0 shows 30:00
+            *(interval_timer_ptr + 1) = 7;  // STOP = 0; START = 1; CONT = 1; ITO = 1
             score = 0;                      // Reset the score
             display_score(score);
             state = 1;                      // Set the state to be 1 (on)
@@ -102,9 +101,12 @@ int main(void) {
             int pressed = *(key_ptr + 3);   // Read the edge capture register
             while (pressed == 0) {          // Wait until key being pressed
                 pressed = *(key_ptr + 3);
-                if (state == 0) break;      // Check if interrupt happened
+                if (time_left == 0) {
+                    state = 0;
+                    break;
+                }
             }
-            if (state == 0) continue;       // Check if interrupt happened
+            if (state == 0) continue;
             *(key_ptr + 3) = pressed;       // Reset the edge capture register
             int index = 0;
 
