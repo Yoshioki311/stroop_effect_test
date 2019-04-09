@@ -1,4 +1,7 @@
                 .extern time_left
+                .extern state
+                .extern key_pressed
+                .extern key
 
                 .global pushbutton_ISR
 
@@ -7,7 +10,42 @@ pushbutton_ISR:
                 LDR      R1, [R0, #0xC]  // read the edge capture register
                 STR      R1, [R0, #0xC]  // clear the interrupt
 
-                MOV      PC, LR
+                LDR      R0, =key_pressed
+                MOV      R2, #1
+                STR      R2, [R0]        // set key pressed to true
+
+                LDR      R0, =state
+                LDR      R2, [R0]
+                CMP      R2, #0
+                BEQ      START_GAME
+
+                LDR      R0, =key
+                
+                CMP      R1, #1
+                MOVEQ    R3, #3
+
+                CMP      R1, #2
+                MOVEQ    R3, #2
+
+                CMP      R1, #4
+                MOVEQ    R3, #1
+
+                CMP      R1, #8
+                MOVEQ    R3, #0
+
+                STR      R3, [R0]
+
+                B        END_KEY_ISR
+
+START_GAME:     MOV      R2, #1          // set state to game started
+                STR      R2, [R0]
+                B        END_KEY_ISR
+
+                LDR      R0, =time_left
+                MOVW     R2, #3000
+                STR      R2, [R0]
+
+END_KEY_ISR:    MOV      PC, LR
 
                 .global interval_timer_ISR
 
@@ -22,7 +60,7 @@ interval_timer_ISR:
                 SUB      R2, #1
                 STR      R2, [R1]
 
-                CMP      R2, #0
+                CMP      R2, #0          // time_left == 0?
                 BNE      DISPLAY
 
                 MOV      R1, #0b1011     // Stop the timer
@@ -31,6 +69,10 @@ interval_timer_ISR:
                 STR      R1, [R0, #8]    // 100MHz * 0.01s = 1,000,000 = 0xF4240
                 MOVW     R1, #0xF        // higher 16 bits of count value
                 STR      R1, [R0, #12]
+
+                LDR      R0, =state      // set state to game paused
+                MOV      R1, #0
+                STR      R1, [R0]
 
 DISPLAY:        PUSH     {R4, LR}
                 MOV      R0, R2 
