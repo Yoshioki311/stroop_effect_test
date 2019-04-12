@@ -39,7 +39,6 @@ pushbutton_ISR:
 
 START_GAME:     MOV      R2, #1          // set state to game started
                 STR      R2, [R0]
-                B        END_KEY_ISR
 
                 LDR      R0, =time_left
                 MOVW     R2, #3000
